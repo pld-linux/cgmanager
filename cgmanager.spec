@@ -6,16 +6,18 @@
 Summary:	Linux cgroup manager
 Summary(pl.UTF-8):	Zarządca linuksowych cgroup
 Name:		cgmanager
-Version:	0.36
+Version:	0.41
 Release:	1
 License:	GPL v2
 Group:		Daemons
 Source0:	https://linuxcontainers.org/downloads/cgmanager/%{name}-%{version}.tar.gz
-# Source0-md5:	eaa1ead225b4cb3aa91111865faa6e35
+# Source0-md5:	6ebed9ed3bf0751eb3cde47a94c45340
 URL:		https://linuxcontainers.org/cgmanager/
 BuildRequires:	dbus-devel >= 1.2.16
 BuildRequires:	help2man
+# libnih, libnih-dbus
 BuildRequires:	libnih-devel >= 1.0.3
+BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.647
 Requires(post,preun):	/sbin/ldconfig
@@ -83,7 +85,8 @@ Statyczna biblioteka cgmanager.
 %build
 %configure \
 	%{!?with_static_libs:--disable-static} \
-	--with-init-script=sysvinit,systemd
+	--with-init-script=sysvinit,systemd \
+	--with-pamdir=/%{_lib}/security
 %{__make}
 
 %install
@@ -128,9 +131,11 @@ fi
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/cgm
-%attr(755,root,root) %{_sbindir}/cgm-release-agent
 %attr(755,root,root) %{_sbindir}/cgmanager
 %attr(755,root,root) %{_sbindir}/cgproxy
+%dir %{_libexecdir}/cgmanager
+%attr(755,root,root) %{_libexecdir}/cgmanager/cgm-release-agent
+%attr(755,root,root) /%{_lib}/security/pam_cgm.so
 %attr(754,root,root) /etc/rc.d/init.d/cgmanager
 %attr(754,root,root) /etc/rc.d/init.d/cgproxy
 %{systemdunitdir}/cgmanager.service
