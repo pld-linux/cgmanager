@@ -1,0 +1,10 @@
+--- cgmanager-0.42/cgmanager.c.orig	2019-03-12 17:08:19.000000000 +0100
++++ cgmanager-0.42/cgmanager.c	2023-01-14 12:48:14.065767918 +0100
+@@ -20,7 +20,6 @@
+ #include <frontend.h>
+ #include <sys/resource.h>
+ #include <sys/vfs.h>
+-#include <linux/fs.h>
+ 
+ struct autoremove_entry {
+ 	NihList entry;

@@ -6,12 +6,14 @@
 Summary:	Linux cgroup manager
 Summary(pl.UTF-8):	Zarządca linuksowych cgroup
 Name:		cgmanager
-Version:	0.41
+Version:	0.42
 Release:	1
 License:	GPL v2
 Group:		Daemons
+#Source0Download: https://linuxcontainers.org/cgmanager/downloads/
 Source0:	https://linuxcontainers.org/downloads/cgmanager/%{name}-%{version}.tar.gz
-# Source0-md5:	6ebed9ed3bf0751eb3cde47a94c45340
+# Source0-md5:	6cf7549e91a73c56164a28ef4d2980ce
+Patch0:		%{name}-glibc.patch
 URL:		https://linuxcontainers.org/cgmanager/
 BuildRequires:	dbus-devel >= 1.2.16
 BuildRequires:	help2man
@@ -81,6 +83,7 @@ Statyczna biblioteka cgmanager.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %configure \
